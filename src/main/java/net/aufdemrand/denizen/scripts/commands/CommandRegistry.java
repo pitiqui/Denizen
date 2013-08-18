@@ -92,7 +92,8 @@ public class CommandRegistry implements dRegistry {
                 "COMPASS", "compass [<location>]", 1);
 
         // <--
-        // @Stable Cooldown
+        // Cooldown
+        // @Stable
         // @Short Temporarily disables a script-container from meeting requirements.
         //
         // @Description
