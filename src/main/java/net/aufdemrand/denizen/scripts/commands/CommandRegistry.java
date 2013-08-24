@@ -93,15 +93,16 @@ public class CommandRegistry implements dRegistry {
 
         // <--
         // Cooldown
-        // @Stable
-        // @Short Temporarily disables a script-container from meeting requirements.
+        // @Stable 1.0
+        // @Short  Temporarily disables a script-container from meeting requirements.
+        // @Author aufdemrand
         //
         // @Description
-        // Cools down a script-container. If an interact-container, when on cooldown, scripts will not pass a requirements
-        // check allowing the next highest priority script to trigger. If any other type of script, a manual requirements
-        // check (<s@script_name.requirements.check>) will also return false until the cooldown period is completed.
-        // Cooldown requires a type (player or global), a script, and a duration. It also requires a valid link to a dPlayer
-        // if using player-type cooldown.
+        // Cools down a script-container. If an interact-container, when on cooldown, scripts will not pass a
+        // requirements check allowing the next highest priority script to trigger. If any other type of script, a
+        // manual requirements check (<s@script_name.requirements.check>) will also return false until the cooldown
+        // period is completed. Cooldown requires a type (player or global), a script, and a duration. It also requires
+        // a valid link to a dPlayer if using player-type cooldown.
         //
         // Cooldown periods are persistent through a server restart as they are saved in the saves.yml.
         //
@@ -111,20 +112,23 @@ public class CommandRegistry implements dRegistry {
         // <s@requirements.check> will also check script cooldown, as well as any requirements.
         //
         // @Usage
+        // Use to keep the current interact script from meeting requirements.
+        // - cooldown 20m
+        //
+        // @Usage
         // Use to keep a player from activating a script for a specified duration.
-        // - cooldown s@bonus_script d:11h
-        // - cooldown s@hit_indicator d:5s
+        // - cooldown 11h s:s@bonus_script
+        // - cooldown 5s s:s@hit_indicator
         //
         // @Usage
         // Use the 'global' argument to indicate the script to be on cooldown for all players.
-        // - cooldown global s@daily_treasure_offering d:24h
+        // - cooldown global 24h s:s@daily_treasure_offering
         //
         // @Example
         //
         // -->
-
-        registerCoreMember(CooldownCommand.class, 
-                "COOLDOWN", "cooldown (duration:<value>) (global) (script:<name>)", 1);
+        registerCoreMember(CooldownCommand.class,
+                "COOLDOWN", "cooldown [<duration>] (global) (s:<script>)", 1);
 
         registerCoreMember(CopyBlockCommand.class,
                 "COPYBLOCK", "copyblock [location:<location>] [to:<location>]", 1);
@@ -132,10 +136,53 @@ public class CommandRegistry implements dRegistry {
         registerCoreMember(CreateWorldCommand.class,
                 "CREATEWORLD", "createworld [<name>] (g:<generator>)", 1);
 
+        // <--
+        // Define
+        // @Stable 1.0
+        // @Short  Creates a temporary variable inside a script queue.
+        // @Author aufdemrand
+        //
+        // @Description
+        // Definitions are queue-level (or script-level) 'variables' that can be used throughout a script, once
+        // defined, by using %'s around the definition id/name. Definitions are only valid on the current queue and are
+        // not transferred to any new queues constructed within the script, such as a 'run' command, without explicitly
+        // specifying to do so.
+        //
+        // Definitions are lighter and faster than creating a temporary flag, but unlike flags, are only a single entry,
+        // that is, you can't add or remove from the definition, but you can re-create it if you wish to specify a new
+        // value. Definitions are also automatically destroyed when the queue is completed, so there is no worry for
+        // leaving unused data hanging around.
+        //
+        // Definitions are also resolved before replaceable tags, meaning you can use them within tags, even as an
+        // attribute. ie. <%player%.name>
+        //
+        // @Usage
+        // Use to make complex tags look less complex, and scripts more readable.
+        // - narrate 'You invoke your power of notice...'
+        // - define range '<player.flag[range_level].mul[3]>'
+        // - define blocks '<player.flag[noticeable_blocks>'
+        // - narrate '[NOTICE] You have noticed <player.location.find.blocks[%blocks%].within[%range].size>
+        //   blocks in the area that may be of interest.'
+        //
+        // @Usage
+        // Use to keep the value of a replaceable tag that you might use many times within a single script. Definitions
+        // can be faster and cleaner than reusing a replaceable tag over and over.
+        // - define arg1 <c.args.get[1]>
+        // - if %arg1% == hello narrate 'Hello!'
+        // - if %arg1% == goodbye narrate 'Goodbye!'
+        //
+        // @Usage
+        // Use to pass some important information (arguments) on to another queue.
+        // - run 'new_task' d:hello|world
+        // 'new_task' now has some definitions, %1% and %2%, that contains the contents specified, 'hello' and 'world'.
+        //
+        // @Example
+        //
+        // -->
         registerCoreMember(DefineCommand.class,
                 "DEFINE", "define [<id>] [<value>]", 2);
-        
-        registerCoreMember(DetermineCommand.class, 
+
+        registerCoreMember(DetermineCommand.class,
                 "DETERMINE", "determine [<value>]", 1);
 
         registerCoreMember(DisengageCommand.class, 

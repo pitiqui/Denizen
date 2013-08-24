@@ -38,7 +38,7 @@ public class ScriptEngine {
             scriptEntry.setSendingQueue(scriptQueue);
 
             // Execute the scriptEntry
-            try { getScriptExecuter().execute(scriptEntry); }
+            try { commandExecuter.execute(scriptEntry); }
 
             catch (Throwable e) {
                 dB.echoError("Woah! An exception has been called with this command!");
@@ -88,18 +88,15 @@ public class ScriptEngine {
         return requirementChecker;
     }
 
+
     /**
      * Gets the currently loaded instance of the Command Executer
      *
      * @return  CommandExecuter
      *
      */
-    public CommandExecuter getScriptExecuter() {
+    public CommandExecuter getCommandExecuter() {
         return commandExecuter;
     }
-
-
-
-
 
 }

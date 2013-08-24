@@ -35,7 +35,7 @@ public abstract class ScriptQueue {
         return "Total number of queues created: "
                 + total_queues
                 + ", currently active queues: "
-                + _queues.size() +  ".";
+                + _queues.size() +  '.';
     }
 
 

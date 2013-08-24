@@ -17,8 +17,7 @@ import java.util.regex.Pattern;
 public class dList extends ArrayList<String> implements dObject {
 
     final static Pattern flag_by_id =
-            Pattern.compile("(fl\\[((?:p@|n@)(.+?))\\]@|fl@)(.+)",
-                    Pattern.CASE_INSENSITIVE);
+            Pattern.compile("(fl\\[((?:p@|n@)(.+?))\\]@|fl@)(.+)", Pattern.CASE_INSENSITIVE);
 
     final static Pattern split_char = Pattern.compile("\\|");
     final static Pattern identifier = Pattern.compile("li@", Pattern.CASE_INSENSITIVE);
@@ -59,7 +58,7 @@ public class dList extends ArrayList<String> implements dObject {
         }
 
         // Use value of string, which will seperate values by the use of a pipe '|'
-        return new dList(string.replaceFirst(identifier.pattern(), ""));
+        return new dList(identifier.matcher(string).replaceFirst(""));
     }
 
 

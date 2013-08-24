@@ -22,7 +22,6 @@ public class NotableManager {
         try { _initialize(); } catch (IOException e) {
 
 
-
         } catch (ClassNotFoundException e) {
 
 
