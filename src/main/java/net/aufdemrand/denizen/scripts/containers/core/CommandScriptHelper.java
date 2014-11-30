@@ -6,8 +6,6 @@ import net.aufdemrand.denizen.utilities.debugging.dB;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.craftbukkit.v1_8_R1.command.VanillaCommandWrapper;
-import org.bukkit.craftbukkit.v1_8_R1.help.CommandAliasHelpTopic;
 import org.bukkit.event.Listener;
 import org.bukkit.help.HelpMap;
 import org.bukkit.help.HelpTopic;
@@ -59,9 +57,6 @@ public class CommandScriptHelper implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (!(knownCommands.get("help") instanceof VanillaCommandWrapper)) {
-                        return;
-                    }
                     knownCommands.put("help", knownCommands.get("bukkit:help"));
                     helpTopics.put("/help", helpTopics.get("/bukkit:help"));
                 }
@@ -112,8 +107,8 @@ public class CommandScriptHelper implements Listener {
             // Register each alias
             for (String alias : command.getAliases()) {
                 if (denizenCommands.containsKey(alias)) continue;
-                forceCommand(alias, command, new CommandAliasHelpTopic("/" + alias, name,
-                        DenizenAPI.getCurrentInstance().getServer().getHelpMap()));
+                //forceCommand(alias, command, new CommandAliasHelpTopic("/" + alias, name,
+                //        DenizenAPI.getCurrentInstance().getServer().getHelpMap()));
             }
         }
     }

@@ -17,10 +17,8 @@ import net.aufdemrand.denizen.utilities.packets.ItemChangeMessage;
 import net.aufdemrand.denizen.utilities.packets.PlayerBars;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import net.minecraft.server.v1_8_R1.PacketPlayOutGameStateChange;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -2182,19 +2180,6 @@ public class dPlayer implements dObject, Adjustable {
         // -->
         if (mechanism.matches("item_message")) {
             ItemChangeMessage.sendMessage(getPlayerEntity(), value.asString());
-        }
-
-        // <--[mechanism]
-        // @object dPlayer
-        // @name show_endcredits
-        // @input None
-        // @description
-        // Shows the player the end credits.
-        // -->
-        if (mechanism.matches("show_endcredits")) {
-            ((CraftPlayer)getPlayerEntity()).getHandle().viewingCredits = true;
-            ((CraftPlayer)getPlayerEntity()).getHandle().playerConnection
-                    .sendPacket(new PacketPlayOutGameStateChange(4, 0.0F));
         }
 
         // Iterate through this object's properties' mechanisms

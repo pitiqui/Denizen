@@ -211,8 +211,8 @@ public class BukkitCommandRegistry extends CommandRegistry {
         // @Usage
         // TODO: Document Command Details
         // -->
-        registerCoreMember(AnimateChestCommand.class,
-                "ANIMATECHEST", "animatechest [<location>] ({open}/close) (sound:{true}/false) (<player>|...)", 1);
+      //  registerCoreMember(AnimateChestCommand.class,
+      //          "ANIMATECHEST", "animatechest [<location>] ({open}/close) (sound:{true}/false) (<player>|...)", 1);
 
 
         // <--[command]
@@ -2604,8 +2604,8 @@ public class BukkitCommandRegistry extends CommandRegistry {
         // @Usage
         // TODO: Document Command Details
         // -->
-        registerCoreMember(SwitchCommand.class,
-                "SWITCH", "switch [<location>] (state:[{toggle}/on/off]) (duration:<value>)", 1);
+      //  registerCoreMember(SwitchCommand.class,
+       //         "SWITCH", "switch [<location>] (state:[{toggle}/on/off]) (duration:<value>)", 1);
 
         // <--[command]
         // @Name Take

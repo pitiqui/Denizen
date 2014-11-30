@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,8 +22,6 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,8 +187,8 @@ public class ModifyBlockCommand extends AbstractCommand implements Listener, Hol
             return false;
         // Freeze the first world in the list.
         // TODO: make this do all worlds from the locations in the list
-        CraftWorld craftWorld = (CraftWorld)((dLocation)locations.get(0)).getWorld();
-        boolean was_static = craftWorld.getHandle().isStatic;
+        //CraftWorld craftWorld = (CraftWorld)((dLocation)locations.get(0)).getWorld();
+        boolean was_static = false;//craftWorld.getHandle().isStatic;
         if (no_physics)
             setWorldIsStatic(((dLocation)locations.get(0)).getWorld(), true);
         return was_static;
@@ -205,10 +202,11 @@ public class ModifyBlockCommand extends AbstractCommand implements Listener, Hol
         no_physics = false;
     }
 
-    private static Field isStaticField = null;
+    //private static Field isStaticField = null;
 
     void setWorldIsStatic(World world, boolean isStatic) {
         try {
+            /*
             CraftWorld craftWorld = (CraftWorld) world;
             if (isStaticField == null) {
                     isStaticField = craftWorld.getHandle().getClass().getField("isStatic");
@@ -217,7 +215,7 @@ public class ModifyBlockCommand extends AbstractCommand implements Listener, Hol
                     modifiersField.setAccessible(true);
                     modifiersField.setInt(isStaticField, isStaticField.getModifiers() & ~Modifier.FINAL);
             }
-            isStaticField.set(craftWorld.getHandle(), isStatic);
+            isStaticField.set(craftWorld.getHandle(), isStatic);*/
         } catch (Exception e) {
             dB.echoError(e);
         }

@@ -7,9 +7,11 @@ import net.aufdemrand.denizen.scripts.ScriptEntry;
 import net.aufdemrand.denizen.tags.Attribute;
 
 import net.aufdemrand.denizen.tags.TagManager;
-import org.apache.commons.lang3.StringUtils;
+import net.aufdemrand.denizencore.utilities.CoreUtilities;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import java.util.List;
 
 /**
  * Bukkit event that fires on the finding of a replaceable tag, as indicated by surrounding < >'s.
@@ -147,7 +149,7 @@ public class ReplaceableTagEvent extends Event {
 
     // TODO: Remove in 1.0!
     public boolean matches(String tagName) {
-        String[] tagNames = StringUtils.split(tagName, ',');
+        List<String> tagNames = CoreUtilities.Split(tagName, ',');
         String name = getName();
         for (String string: tagNames)
             if (name.equalsIgnoreCase(string.trim())) return true;

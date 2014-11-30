@@ -24,18 +24,13 @@ import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.Trait;
 import net.citizensnpcs.api.trait.trait.Equipment;
 import net.citizensnpcs.api.trait.trait.Owner;
-import net.citizensnpcs.npc.entity.nonliving.FallingBlockController;
-import net.citizensnpcs.npc.entity.nonliving.ItemController;
-import net.citizensnpcs.npc.entity.nonliving.ItemFrameController;
 import net.citizensnpcs.trait.Anchors;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.Poses;
 import net.citizensnpcs.util.Anchor;
 import net.citizensnpcs.util.Pose;
-import net.minecraft.server.v1_8_R1.EntityLiving;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -126,10 +121,6 @@ public class dNPC implements dObject, Adjustable, InventoryHolder {
             this.npcid = citizensNPC.getId();
         if (npcid >= 0 && !dNPCRegistry._isRegistered(citizensNPC))
             dNPCRegistry._registerNPC(this);
-    }
-
-    public EntityLiving getHandle() {
-        return ((CraftLivingEntity) getEntity()).getHandle();
     }
 
     public NPC getCitizen() {
