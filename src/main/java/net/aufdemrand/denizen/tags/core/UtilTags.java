@@ -433,7 +433,7 @@ public class UtilTags implements Listener {
         if (attribute.startsWith("match_player") && attribute.hasContext(1)) {
             Player matchPlayer = null;
             String matchInput = attribute.getContext(1).toLowerCase();
-            for (Player player: Bukkit.getOnlinePlayers()) {
+            for (Player player: dPlayer.getOnlinePlayers()) {
                 if (player.getName().toLowerCase().equals(matchInput)) {
                     matchPlayer = player;
                     break;
@@ -486,7 +486,7 @@ public class UtilTags implements Listener {
                 && attribute.hasContext(1)) {
             String flag = attribute.getContext(1);
             ArrayList<dPlayer> players = new ArrayList<dPlayer>();
-            for (Player player: Bukkit.getOnlinePlayers()) {
+            for (Player player: dPlayer.getOnlinePlayers()) {
                 if (DenizenAPI.getCurrentInstance().flagManager().getPlayerFlag(new dPlayer(player), flag).size() > 0)
                     players.add(new dPlayer(player));
             }
@@ -614,7 +614,7 @@ public class UtilTags implements Listener {
         // -->
         if (attribute.startsWith("list_online_players")) {
             ArrayList<dPlayer> players = new ArrayList<dPlayer>();
-            for (Player player : Bukkit.getOnlinePlayers())
+            for (Player player : dPlayer.getOnlinePlayers())
                 players.add(dPlayer.mirrorBukkitPlayer(player));
             event.setReplaced(new dList(players).getAttribute(attribute.fulfill(1)));
             return;
@@ -656,7 +656,7 @@ public class UtilTags implements Listener {
         // -->
         if (attribute.startsWith("list_online_ops")) {
             ArrayList<dPlayer> players = new ArrayList<dPlayer>();
-            for (Player player : Bukkit.getOnlinePlayers())
+            for (Player player : dPlayer.getOnlinePlayers())
                 if (player.isOp()) players.add(dPlayer.mirrorBukkitPlayer(player));
             event.setReplaced(new dList(players).getAttribute(attribute.fulfill(1)));
             return;

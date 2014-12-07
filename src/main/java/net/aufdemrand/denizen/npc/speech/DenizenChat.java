@@ -3,6 +3,7 @@ package net.aufdemrand.denizen.npc.speech;
 import net.aufdemrand.denizen.BukkitScriptEntryData;
 import net.aufdemrand.denizen.Settings;
 import net.aufdemrand.denizen.objects.dEntity;
+import net.aufdemrand.denizen.objects.dPlayer;
 import net.aufdemrand.denizen.scripts.ScriptEntry;
 import net.aufdemrand.denizen.scripts.queues.ScriptQueue;
 import net.aufdemrand.denizen.tags.TagManager;
@@ -125,7 +126,7 @@ public class DenizenChat implements VocalChord {
         double range = context.getChatRange();
         List<Entity> bystanderEntities = new ArrayList<Entity>();
         if (range == 0D) {
-            for (Player player : Bukkit.getServer().getOnlinePlayers())
+            for (Player player : dPlayer.getOnlinePlayers())
                 bystanderEntities.add(player);
         }
         else {

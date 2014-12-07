@@ -390,7 +390,7 @@ public class Denizen extends JavaPlugin implements DenizenImplementation {
         InventoryScriptHelper._savePlayerInventories();
 
         // Deconstruct listeners (server shutdown seems not to be triggering a PlayerQuitEvent)
-        for (Player player : this.getServer().getOnlinePlayers())
+        for (Player player : dPlayer.getOnlinePlayers())
             getListenerRegistry().deconstructPlayer(dPlayer.mirrorBukkitPlayer(player));
 
         for (OfflinePlayer player : this.getServer().getOfflinePlayers()) {

@@ -28,6 +28,7 @@ package net.aufdemrand.denizen.utilities;
  * either expressed or implied, of anybody else.
  */
 
+import net.aufdemrand.denizen.objects.dPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -284,7 +285,7 @@ public class MetricsLite {
         boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
         String pluginVersion = description.getVersion();
         String serverVersion = Bukkit.getVersion();
-        int playersOnline = Bukkit.getServer().getOnlinePlayers().size(); // DENIZEN - correct player count system for .17.10
+        int playersOnline = dPlayer.getOnlinePlayers().size(); // DENIZEN - correct player count system for .17.10
 
         // END server software specific section -- all code below does not use any code outside of this class / Java
 

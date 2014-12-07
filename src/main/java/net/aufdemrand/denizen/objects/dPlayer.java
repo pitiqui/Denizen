@@ -46,6 +46,17 @@ public class dPlayer implements dObject, Adjustable {
         else return new dPlayer(player);
     }
 
+    public static List<Player> getOnlinePlayers() {
+        try {
+            return (List<Player>)Bukkit.getServer().getClass().getMethod("getOnlinePlayers").invoke(Bukkit.getServer());
+
+        }
+        catch (Exception e) {
+            dB.echoError(e);
+            return null;
+        }
+    }
+
     static Map<String, UUID> playerNames = new HashMap<String, UUID>();
 
     /**
@@ -823,7 +834,7 @@ public class dPlayer implements dObject, Adjustable {
             // If you need it anywhere else, use <server.list_online_players>**
             // -->
             if (attribute.startsWith("list.online")) {
-                for(Player player : Bukkit.getOnlinePlayers())
+                for(Player player : getOnlinePlayers())
                     players.add(player.getName());
                 return new dList(players).getAttribute(attribute.fulfill(2));
             }
@@ -1377,7 +1388,7 @@ public class dPlayer implements dObject, Adjustable {
         // May be 'starving', 'famished', 'parched, 'hungry' or 'healthy'.
         // -->
         if (attribute.startsWith("food_level.formatted")) {
-            double maxHunger = getPlayerEntity().getMaxHealth();
+            double maxHunger = 20;//getPlayerEntity().getMaxHealth();
             if (attribute.hasContext(2))
                 maxHunger = attribute.getIntContext(2);
             if (getPlayerEntity().getFoodLevel() / maxHunger < .10)
