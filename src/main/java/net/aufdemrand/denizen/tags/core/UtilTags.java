@@ -504,9 +504,9 @@ public class UtilTags implements Listener {
                 && attribute.hasContext(1)) {
             String flag = attribute.getContext(1);
             ArrayList<dPlayer> players = new ArrayList<dPlayer>();
-            for (Map.Entry<String, UUID> entry : dPlayer.getAllPlayers().entrySet()) {
-                if (DenizenAPI.getCurrentInstance().flagManager().getPlayerFlag(entry.getValue(), flag).size() > 0)
-                    players.add(new dPlayer(entry.getValue()));
+            for (OfflinePlayer entry : Bukkit.getOfflinePlayers()) {
+                if (DenizenAPI.getCurrentInstance().flagManager().getPlayerFlag(new dPlayer(entry), flag).size() > 0)
+                    players.add(new dPlayer(entry));
             }
             event.setReplaced(new dList(players).getAttribute(attribute.fulfill(1)));
             return;
@@ -873,18 +873,6 @@ public class UtilTags implements Listener {
                 && event.hasTypeContext()) {
             dEntity ent = dEntity.valueOf(event.getTypeContext());
             event.setReplaced(new Element((ent != null && ent.isUnique() && ent.isSpawned()) ? "true" : "false")
-                    .getAttribute(attribute.fulfill(1)));
-        }
-
-        // <--[tag]
-        // @attribute <util.player_is_valid[<player name>]>
-        // @returns Element(Boolean)
-        // @description
-        // Returns whether a player exists under the specified name.
-        // -->
-        else if (type.equalsIgnoreCase("PLAYER_IS_VALID")
-                && event.hasTypeContext()) {
-            event.setReplaced(new Element(dPlayer.playerNameIsValid(event.getTypeContext()))
                     .getAttribute(attribute.fulfill(1)));
         }
 

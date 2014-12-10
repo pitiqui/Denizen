@@ -3701,11 +3701,6 @@ public class WorldScriptHelper implements Listener {
         List<String> events = new ArrayList<String>();
         context.put("hostname", new Element(event.getHostname()));
 
-        if (!dPlayer.isNoted(event.getPlayer())) {
-            events.add("player logs in for the first time");
-            events.add("player first login");
-        }
-
         dPlayer.notePlayer(event.getPlayer());
 
         events.add("player logs in");

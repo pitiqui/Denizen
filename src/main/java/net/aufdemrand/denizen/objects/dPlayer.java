@@ -49,15 +49,12 @@ public class dPlayer implements dObject, Adjustable {
     public static List<Player> getOnlinePlayers() {
         try {
             return (List<Player>)Bukkit.getServer().getClass().getMethod("getOnlinePlayers").invoke(Bukkit.getServer());
-
         }
         catch (Exception e) {
             dB.echoError(e);
             return null;
         }
     }
-
-    static Map<String, UUID> playerNames = new HashMap<String, UUID>();
 
     /**
      * Notes that the player exists, for easy dPlayer valueOf handling.
@@ -67,17 +64,6 @@ public class dPlayer implements dObject, Adjustable {
             dB.echoError("Null player " + player.toString());
             return;
         }
-        if (!playerNames.containsKey(player.getName().toLowerCase())) {
-            playerNames.put(player.getName().toLowerCase(), player.getUniqueId());
-        }
-    }
-
-    public static boolean isNoted(OfflinePlayer player) {
-        return playerNames.containsValue(player.getUniqueId());
-    }
-
-    public static Map<String, UUID> getAllPlayers() {
-        return playerNames;
     }
 
 
@@ -106,26 +92,9 @@ public class dPlayer implements dObject, Adjustable {
 
         string = string.replace("p@", "").replace("P@", "");
 
-        // Match as a UUID
-
-        if (string.indexOf('-') >= 0) {
-            try {
-                UUID uuid = UUID.fromString(string);
-                if (uuid != null) {
-                    OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-                    if (player != null) {
-                        return new dPlayer(player);
-                    }
-                }
-            }
-            catch (IllegalArgumentException e) {
-                // Nothing
-            }
-        }
-
         // Match as a player name
-        if (playerNames.containsKey(string.toLowerCase())) {
-            OfflinePlayer player = Bukkit.getOfflinePlayer(playerNames.get(string.toLowerCase()));
+        OfflinePlayer player = Bukkit.getOfflinePlayer(string);
+        if (player != null && player.hasPlayedBefore()) {
             return new dPlayer(player);
         }
 
@@ -145,25 +114,11 @@ public class dPlayer implements dObject, Adjustable {
         if (arg.toLowerCase().startsWith("p@")) return true;
 
         arg = arg.replace("p@", "").replace("P@", "");
-        if (arg.indexOf('-') >= 0) {
-            try {
-                UUID uuid = UUID.fromString(arg);
-                if (uuid != null) {
-                    OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-                    if (player != null) {
-                        return true;
-                    }
-                }
-            }
-            catch (IllegalArgumentException e) {
-                // Nothing
-            }
+        OfflinePlayer player = Bukkit.getOfflinePlayer(arg);
+        if (player != null && player.hasPlayedBefore()) {
+            return  true;
         }
         return false;
-    }
-
-    public static boolean playerNameIsValid(String name) {
-        return playerNames.containsKey(name.toLowerCase());
     }
 
 
@@ -173,10 +128,6 @@ public class dPlayer implements dObject, Adjustable {
 
     public dPlayer(OfflinePlayer player) {
         offlinePlayer = player;
-    }
-
-    public dPlayer(UUID uuid) {
-        offlinePlayer = Bukkit.getOfflinePlayer(uuid);
     }
 
     public dPlayer(Player player) {
@@ -201,7 +152,7 @@ public class dPlayer implements dObject, Adjustable {
     public Player getPlayerEntity() {
         if (NPCPlayer != null) return NPCPlayer;
         if (offlinePlayer == null) return null;
-        return Bukkit.getPlayer(offlinePlayer.getUniqueId());
+        return Bukkit.getPlayer(offlinePlayer.getName());
     }
 
     public OfflinePlayer getOfflinePlayer() {
@@ -234,7 +185,7 @@ public class dPlayer implements dObject, Adjustable {
     public String getSaveName() {
         if (offlinePlayer == null)
             return "00.UNKNOWN";
-        String baseID = offlinePlayer.getUniqueId().toString().toUpperCase().replace("-", "");
+        String baseID = offlinePlayer.getName().toUpperCase();
         return baseID.substring(0, 2) + "." + baseID;
     }
 
@@ -447,7 +398,7 @@ public class dPlayer implements dObject, Adjustable {
 
     @Override
     public String identify() {
-        return "p@" + offlinePlayer.getUniqueId().toString();
+        return "p@" + offlinePlayer.getName();
     }
 
     @Override
@@ -849,13 +800,13 @@ public class dPlayer implements dObject, Adjustable {
             else if (attribute.startsWith("list.offline")) {
                 for(OfflinePlayer player : Bukkit.getOfflinePlayers()) {
                     if (!player.isOnline())
-                        players.add("p@" + player.getUniqueId().toString());
+                        players.add("p@" + player.getName());
                 }
                 return new dList(players).getAttribute(attribute.fulfill(2));
             }
             else {
                 for(OfflinePlayer player : Bukkit.getOfflinePlayers())
-                    players.add("p@" + player.getUniqueId().toString());
+                    players.add("p@" + player.getName());
                 return new dList(players).getAttribute(attribute.fulfill(1));
             }
         }
@@ -868,10 +819,6 @@ public class dPlayer implements dObject, Adjustable {
         if (attribute.startsWith("name") && !isOnline())
             // This can be parsed later with more detail if the player is online, so only check for offline.
             return new Element(getName()).getAttribute(attribute.fulfill(1));
-
-        else if (attribute.startsWith("uuid") && !isOnline())
-            // This can be parsed later with more detail if the player is online, so only check for offline.
-            return new Element(offlinePlayer.getUniqueId().toString()).getAttribute(attribute.fulfill(1));
 
         // <--[tag]
         // @attribute <p@player.save_name>

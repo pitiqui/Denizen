@@ -53,17 +53,17 @@ import com.google.common.io.Files;
 
 public class ImprovedOfflinePlayer {
 
-    private UUID player;
+    private String player;
     private File file;
     private NBTTagCompound compound;
     private boolean exists = false;
     private boolean autosave = true;
 
-    public ImprovedOfflinePlayer(UUID playeruuid) {
+    public ImprovedOfflinePlayer(String playeruuid) {
         this.exists = loadPlayerData(playeruuid);
     }
     public ImprovedOfflinePlayer(OfflinePlayer offlineplayer) {
-        this.exists = loadPlayerData(offlineplayer.getUniqueId());
+        this.exists = loadPlayerData(offlineplayer.getName());
     }
 
     public org.bukkit.inventory.PlayerInventory getInventory() {
@@ -72,7 +72,7 @@ public class ImprovedOfflinePlayer {
         PlayerInventory inventory = new PlayerInventory(null);
         inventory.b(this.compound.getList("Inventory", 10));
         org.bukkit.inventory.PlayerInventory inv = new CraftInventoryPlayer(inventory);
-        InventoryScriptHelper.offlineInventories.put(getUniqueId(), inv);
+        InventoryScriptHelper.offlineInventories.put(Bukkit.getOfflinePlayer(getUniqueId()), inv);
         return inv;
     }
 
@@ -115,7 +115,7 @@ public class ImprovedOfflinePlayer {
         if(this.autosave) savePlayerData();
     }
 
-    private boolean loadPlayerData(UUID uuid) {
+    private boolean loadPlayerData(String uuid) {
         try {
             this.player = uuid;
             for(World w : Bukkit.getWorlds()) {
@@ -336,7 +336,7 @@ public class ImprovedOfflinePlayer {
         if(this.autosave) savePlayerData();
     }
 
-    public UUID getUniqueId() { return this.player; }
+    public String getUniqueId() { return this.player; }
 
     public int getPortalCooldown() {
         return this.compound.getInt("PortalCooldown");

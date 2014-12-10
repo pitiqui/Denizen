@@ -17,6 +17,7 @@ import net.aufdemrand.denizen.utilities.nbt.ImprovedOfflinePlayer;
 import net.aufdemrand.denizencore.utilities.CoreUtilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.BrewingStand;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -46,9 +47,9 @@ public class dInventory implements dObject, Notable, Adjustable {
         if (InventoryScriptHelper.notableInventories.containsKey(inventory.getTitle()))
             return InventoryScriptHelper.notableInventories.get(inventory.getTitle());
         // Iterate through offline player inventories
-        for (Map.Entry<UUID, PlayerInventory> inv : InventoryScriptHelper.offlineInventories.entrySet()) {
+        for (Map.Entry<OfflinePlayer, PlayerInventory> inv : InventoryScriptHelper.offlineInventories.entrySet()) {
             if (((CraftInventory) inv.getValue()).getInventory().equals(((CraftInventory) inventory).getInventory()))
-                return new dInventory(new ImprovedOfflinePlayer(inv.getKey()));
+                return new dInventory(new ImprovedOfflinePlayer(inv.getKey().getName()));
         }
 
         return new dInventory(inventory);
@@ -476,7 +477,7 @@ public class dInventory implements dObject, Notable, Adjustable {
         }
         else if (getIdType().equals("player")) {
             // Iterate through offline player inventories
-            for (Map.Entry<UUID, PlayerInventory> inv : InventoryScriptHelper.offlineInventories.entrySet()) {
+            for (Map.Entry<OfflinePlayer, PlayerInventory> inv : InventoryScriptHelper.offlineInventories.entrySet()) {
                 if (((CraftInventory) inv.getValue()).getInventory().equals(((CraftInventory) inventory).getInventory())) {
                     idHolder = new dPlayer(inv.getKey()).identify();
                     return;

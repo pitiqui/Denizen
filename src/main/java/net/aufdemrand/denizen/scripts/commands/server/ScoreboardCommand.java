@@ -89,9 +89,6 @@ public class ScoreboardCommand extends AbstractCommand {
     }
 
     public static OfflinePlayer getOfflinePlayer(String name) {
-        if (dPlayer.playerNameIsValid(name))
-            return Bukkit.getOfflinePlayer(name);
-        else
             return new FakeOfflinePlayer(name);
     }
 
