@@ -36,21 +36,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SwitchCommand extends AbstractCommand {
 
-    /* SWITCH [LOCATION:x,y,z,world] (STATE:ON|OFF|TOGGLE) (DURATION:#) */
-
-    /*
-     * Arguments: [] - Required, () - Optional
-     * [LOCATION:x,y,z,world] specifies location of a switch, lever, or pressure plate.
-     * (STATE:ON|OFF|TOGGLE) can be used on locations with switches. Default: TOGGLE
-     * (DURATION:#) Reverts to the previous head position after # amount of seconds.
-     *
-     * Example Usage:
-     * SWITCH LOCATION:<BOOKMARK:Lever_1> STATE:ON
-     * SWITCH LOCATION:99,64,125,world 'DURATION:15'
-     * SWITCH LOCATION:<ANCHOR:button_location>
-     *
-     */
-
     private enum SwitchState { ON, OFF, TOGGLE }
 
     private Map<Location, Integer> taskMap = new ConcurrentHashMap<Location, Integer>(8, 0.9f, 1);
@@ -103,15 +88,10 @@ public class SwitchCommand extends AbstractCommand {
             taskMap.put(interactLocation, DenizenAPI.getCurrentInstance().getServer().getScheduler().scheduleSyncDelayedTask(DenizenAPI.getCurrentInstance(),
                     new Runnable() {
                         public void run() {
-                    // Check to see if the state of the block is what is expected. If switched during
-                    // the duration, the switchback is cancelled.
-                    if (switchState == SwitchState.OFF && !((interactLocation.getBlock().getData() & 0x8) > 0))
-                        switchBlock(se, interactLocation, SwitchState.ON, player);
-                    else if (switchState == SwitchState.ON && ((interactLocation.getBlock().getData() & 0x8) > 0))
-                        switchBlock(se, interactLocation, SwitchState.OFF, player);
-                    else if (switchState == SwitchState.TOGGLE) switchBlock(se, interactLocation, SwitchState.TOGGLE, player);
-                }
-            }, duration * 20));
+                            switchBlock(se, interactLocation, SwitchState.TOGGLE, player);
+                        }
+                    }, duration * 20));
+            // TODO: Clear the task map upon completion so we don't leak memory.
         }
 
     }
