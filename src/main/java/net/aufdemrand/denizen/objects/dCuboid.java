@@ -54,7 +54,7 @@ public class dCuboid implements dObject, Cloneable, Notable, Adjustable {
     //    OBJECT FETCHER
     ////////////////
 
-    final static Pattern item_by_saved = Pattern.compile("(cu@)?(.+)");
+    final static Pattern cuboid_by_saved = Pattern.compile("(cu@)?(.+)");
     /**
      * Gets a Location Object from a string form of id,x,y,z,world
      * or a dScript argument (location:)x,y,z,world. If including an Id,
@@ -108,7 +108,7 @@ public class dCuboid implements dObject, Cloneable, Notable, Adjustable {
         // Match @object format for Notable dCuboids
         Matcher m;
 
-        m = item_by_saved.matcher(string);
+        m = cuboid_by_saved.matcher(string);
 
         if (m.matches() && NotableManager.isType(m.group(2), dCuboid.class))
             return (dCuboid) NotableManager.getSavedObject(m.group(2));
@@ -118,8 +118,6 @@ public class dCuboid implements dObject, Cloneable, Notable, Adjustable {
         return null;
     }
 
-    // regex patterns used for matching
-    final static Pattern location_by_saved = Pattern.compile("(cu@)?(.+)");
     // The regex below: optional-"|" + "<#.#>," x3 + <text> + "|" + "<#.#>," x3 + <text> -- repeating
     final static Pattern location =
             Pattern.compile("(\\|?([\\d\\.]+,){3}[\\w\\s]+\\|([\\d\\.]+,){3}[\\w\\s]+)+",
@@ -133,7 +131,7 @@ public class dCuboid implements dObject, Cloneable, Notable, Adjustable {
         Matcher m;
 
         // Check for named cuboid: cu@notable_cuboid
-        m = location_by_saved.matcher(string);
+        m = cuboid_by_saved.matcher(string);
         if (m.matches() && NotableManager.isType(m.group(2), dCuboid.class)) return true;
 
         // Check for standard cuboid format: cu@x,y,z,world|x,y,z,world|...
