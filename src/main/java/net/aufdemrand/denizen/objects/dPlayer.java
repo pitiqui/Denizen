@@ -48,11 +48,11 @@ public class dPlayer implements dObject, Adjustable {
 
     public static List<Player> getOnlinePlayers() {
         try {
-            return (List<Player>)Bukkit.getServer().getClass().getMethod("getOnlinePlayers").invoke(Bukkit.getServer());
+            return (List<Player>)Server.class.getMethod("getOnlinePlayers").invoke(Bukkit.getServer());
         }
         catch (Exception e) {
             dB.echoError(e);
-            return null;
+            return new ArrayList<Player>(); // TODO: Backup of some form?
         }
     }
 
