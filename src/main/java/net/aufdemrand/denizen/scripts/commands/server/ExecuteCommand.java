@@ -125,19 +125,19 @@ public class ExecuteCommand extends AbstractCommand {
                 dB.echoError(scriptEntry.getResidingQueue(), "Cannot EXECUTE AS_NPC unless the NPC is Spawned.");
                 return;
             }
-            if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity().getType() != EntityType.PLAYER) {
+            if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity().getType() != EntityType.PLAYER) {
                 dB.echoError(scriptEntry.getResidingQueue(), "Cannot EXECUTE AS_NPC unless the NPC is Player-Type.");
                 return;
             }
-            ((Player) ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).setOp(true);
+            ((Player) ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).setOp(true);
             try {
-                ((Player) ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).performCommand(command);
+                ((Player) ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).performCommand(command);
             }
             catch (Throwable e) {
                 dB.echoError(scriptEntry.getResidingQueue(), "Exception while executing command as NPC-OP.");
                 dB.echoError(scriptEntry.getResidingQueue(), e);
             }
-            ((Player) ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).setOp(false);
+            ((Player) ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).setOp(false);
             return;
 
         case AS_SERVER:

@@ -87,14 +87,14 @@ public class ChatTrigger extends AbstractTrigger implements Listener {
 
 
         if (Settings.chatMustSeeNPC()) {
-            if (!player.hasLineOfSight(npc.getEntity())) {
+            if (!player.hasLineOfSight(npc.getBukkitEntity())) {
                 if (HyperDebug) dB.log("no LOS");
                 return new ChatContext(false);
             }
         }
 
         if (Settings.chatMustLookAtNPC()) {
-            if (!Rotation.isFacingEntity(player, npc.getEntity(), 45)) {
+            if (!Rotation.isFacingEntity(player, npc.getBukkitEntity(), 45)) {
                 if (HyperDebug) dB.log("Not facing");
                 return new ChatContext(false);
             }
@@ -145,8 +145,8 @@ public class ChatTrigger extends AbstractTrigger implements Listener {
                 + aH.debugObj("Radius(Max)", npc.getLocation().distance(player.getLocation())
                 + "(" + npc.getTriggerTrait().getRadius(name) + ")")
                 + aH.debugObj("Trigger text", message)
-                + aH.debugObj("LOS", String.valueOf(player.hasLineOfSight(npc.getEntity())))
-                + aH.debugObj("Facing", String.valueOf(Rotation.isFacingEntity(player, npc.getEntity(), 45))));
+                + aH.debugObj("LOS", String.valueOf(player.hasLineOfSight(npc.getBukkitEntity())))
+                + aH.debugObj("Facing", String.valueOf(Rotation.isFacingEntity(player, npc.getBukkitEntity(), 45))));
 
         // Change the text if it's in the determination
         if (trigger.hasDetermination()) {

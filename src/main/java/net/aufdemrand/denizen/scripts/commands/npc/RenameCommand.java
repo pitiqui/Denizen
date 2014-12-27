@@ -46,7 +46,7 @@ public class RenameCommand extends AbstractCommand {
 
         NPC npc = ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getCitizen();
 
-        Location prev = npc.isSpawned() ? npc.getEntity().getLocation() : null;
+        Location prev = npc.isSpawned() ? npc.getBukkitEntity().getLocation() : null;
         npc.despawn(DespawnReason.PENDING_RESPAWN);
         npc.setName(name.asString().length() > 100 ? name.asString().substring(0, 100): name.asString());
         if (prev != null)

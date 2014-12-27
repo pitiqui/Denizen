@@ -98,8 +98,8 @@ public class EntitySpawnSmartEvent implements SmartEvent, Listener {
     // -->
     @EventHandler
     public void npcSpawn(NPCSpawnEvent event) {
-        if (event.getNPC().getEntity() instanceof LivingEntity)
-        creatureSpawn(new CreatureSpawnEvent((LivingEntity)event.getNPC().getEntity(),
+        if (event.getNPC().getBukkitEntity() instanceof LivingEntity)
+        creatureSpawn(new CreatureSpawnEvent((LivingEntity)event.getNPC().getBukkitEntity(),
                 CreatureSpawnEvent.SpawnReason.CUSTOM));
     }
 

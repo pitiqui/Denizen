@@ -22,7 +22,7 @@ public class TimeRequirement extends AbstractRequirement{
             if (aH.matchesArg("DAWN, DAY, DUSK, NIGHT", arg)) time = Time.valueOf(arg.toUpperCase());
         }
 
-        long worldTime = context.getNPC().getEntity().getWorld().getTime();
+        long worldTime = context.getNPC().getBukkitEntity().getWorld().getTime();
 
 
         if (time.equals(Time.DAY) && (worldTime <= 12500))

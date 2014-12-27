@@ -39,20 +39,20 @@ public class InvisibleTrait extends Trait implements Listener, Toggleable {
     public void setInvisible(boolean invisible) {
         this.invisible = invisible;
         if (invisible) setInvisible();
-        else if (npc.isSpawned() && npc.getEntity() instanceof LivingEntity)
-            if (((LivingEntity)npc.getEntity()).hasPotionEffect(PotionEffectType.INVISIBILITY))
-                ((LivingEntity)npc.getEntity()).removePotionEffect(PotionEffectType.INVISIBILITY);
+        else if (npc.isSpawned() && npc.getBukkitEntity() instanceof LivingEntity)
+            if (((LivingEntity)npc.getBukkitEntity()).hasPotionEffect(PotionEffectType.INVISIBILITY))
+                ((LivingEntity)npc.getBukkitEntity()).removePotionEffect(PotionEffectType.INVISIBILITY);
     }
 
 
     private void setInvisible() {
-        if (npc.isSpawned() && npc.getEntity() instanceof LivingEntity) {
+        if (npc.isSpawned() && npc.getBukkitEntity() instanceof LivingEntity) {
             // Apply NPC Playerlist if necessary
-            if (npc.getEntity().getType() == EntityType.PLAYER) {
+            if (npc.getBukkitEntity().getType() == EntityType.PLAYER) {
                 npc.data().setPersistent("removefromplayerlist", false);
-                NMS.addOrRemoveFromPlayerList(npc.getEntity(), false);
+                NMS.addOrRemoveFromPlayerList(npc.getBukkitEntity(), false);
             }
-            invis.apply((LivingEntity)npc.getEntity());
+            invis.apply((LivingEntity)npc.getBukkitEntity());
         }
     }
 

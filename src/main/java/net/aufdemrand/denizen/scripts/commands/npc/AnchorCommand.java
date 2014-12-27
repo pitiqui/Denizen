@@ -99,7 +99,7 @@ public class AnchorCommand extends AbstractCommand {
                 if (n == null)
                     dB.echoError(scriptEntry.getResidingQueue(), "Invalid anchor name '" + id.asString() + "'");
                 else
-                    npc.getEntity().teleport(n.getLocation());
+                    npc.getBukkitEntity().teleport(n.getLocation());
             }
                 return;
 

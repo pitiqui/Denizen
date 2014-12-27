@@ -30,21 +30,21 @@ public class StandCommand extends AbstractCommand {
     @Override
     public void execute(ScriptEntry scriptEntry) throws CommandExecutionException {
 
-        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() != EntityType.PLAYER
-                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() != EntityType.OCELOT
-                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() != EntityType.WOLF) {
+        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() != EntityType.PLAYER
+                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() != EntityType.OCELOT
+                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() != EntityType.WOLF) {
             dB.echoError(scriptEntry.getResidingQueue(), "...only Player, ocelot, or wolf type NPCs can sit!");
             return;
         }
 
         dB.report(scriptEntry, getName(), aH.debugObj("npc", ((BukkitScriptEntryData)scriptEntry.entryData).getNPC()));
 
-        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() == EntityType.OCELOT) {
-            ((Ocelot)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).setSitting(false);
+        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() == EntityType.OCELOT) {
+            ((Ocelot)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).setSitting(false);
         }
 
-        else if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() == EntityType.WOLF) {
-            ((Wolf)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).setSitting(false);
+        else if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() == EntityType.WOLF) {
+            ((Wolf)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).setSitting(false);
         }
 
         else {

@@ -284,8 +284,8 @@ public class dEntity implements dObject, Adjustable {
             this.npc = npc;
 
             if (npc.isSpawned()) {
-                this.entity = npc.getEntity();
-                this.entity_type = npc.getEntity().getType();
+                this.entity = npc.getBukkitEntity();
+                this.entity_type = npc.getBukkitEntity().getType();
                 this.uuid = entity.getUniqueId();
             }
         } else dB.echoError("NPC referenced is null!");
@@ -672,7 +672,7 @@ public class dEntity implements dObject, Adjustable {
                         else {
                             dNPC npc = new dNPC(net.citizensnpcs.api.CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, data1));
                             npc.getCitizen().spawn(location);
-                            entity = npc.getEntity();
+                            entity = npc.getBukkitEntity();
                             uuid = entity.getUniqueId();
                         }
                     }

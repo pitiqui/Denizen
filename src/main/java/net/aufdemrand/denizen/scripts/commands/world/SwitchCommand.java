@@ -112,8 +112,8 @@ public class SwitchCommand extends AbstractCommand {
             else if (Depends.citizens != null) {
                 // If there are no players, link any Human NPC
                 for (NPC npc: CitizensAPI.getNPCRegistry()) {
-                    if (npc.isSpawned() && npc.getEntity() instanceof Player) {
-                        craftPlayer = (CraftPlayer) npc.getEntity();
+                    if (npc.isSpawned() && npc.getBukkitEntity() instanceof Player) {
+                        craftPlayer = (CraftPlayer) npc.getBukkitEntity();
                         break;
                     }
                 }

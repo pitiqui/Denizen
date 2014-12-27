@@ -133,7 +133,17 @@ public class dNPC implements dObject, Adjustable, InventoryHolder {
 
     public Entity getEntity() {
         try {
-            return getCitizen().getEntity();
+            return getCitizen().getBukkitEntity();
+        } catch (NullPointerException e) {
+            dB.log("Uh oh! Denizen has encountered a NPE while trying to fetch an NPC entity. " +
+                    "Has this NPC been removed?");
+            return null;
+        }
+    }
+
+    public Entity getBukkitEntity() {
+        try {
+            return getCitizen().getBukkitEntity();
         } catch (NullPointerException e) {
             dB.log("Uh oh! Denizen has encountered a NPE while trying to fetch an NPC entity. " +
                     "Has this NPC been removed?");

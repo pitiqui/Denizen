@@ -36,9 +36,9 @@ public class SitCommand extends AbstractCommand {
     @Override
     public void execute(ScriptEntry scriptEntry) throws CommandExecutionException {
         dLocation location = (dLocation) scriptEntry.getObject("location");
-        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() != EntityType.PLAYER
-                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() != EntityType.OCELOT
-                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() != EntityType.WOLF) {
+        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() != EntityType.PLAYER
+                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() != EntityType.OCELOT
+                && ((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() != EntityType.WOLF) {
             dB.echoError(scriptEntry.getResidingQueue(), "...only Player, ocelot, or wolf type NPCs can sit!");
             return;
         }
@@ -46,12 +46,12 @@ public class SitCommand extends AbstractCommand {
         dB.report(scriptEntry, getName(), aH.debugObj("npc", ((BukkitScriptEntryData)scriptEntry.entryData).getNPC())
                                         + (location != null ? location.debug(): ""));
 
-        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() == EntityType.OCELOT) {
-            ((Ocelot)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).setSitting(true);
+        if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() == EntityType.OCELOT) {
+            ((Ocelot)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).setSitting(true);
         }
 
-        else if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntityType() == EntityType.WOLF) {
-            ((Wolf)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getEntity()).setSitting(true);
+        else if (((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntityType() == EntityType.WOLF) {
+            ((Wolf)((BukkitScriptEntryData)scriptEntry.entryData).getNPC().getBukkitEntity()).setSitting(true);
         }
 
         else {

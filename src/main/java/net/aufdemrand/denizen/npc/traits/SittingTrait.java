@@ -39,8 +39,8 @@ public class SittingTrait extends Trait implements Listener  {
 
     @Override
     public void onDespawn() {
-        if (npc.getEntity().getVehicle() != null) {
-            npc.getEntity().getVehicle().setPassenger(null);
+        if (npc.getBukkitEntity().getVehicle() != null) {
+            npc.getBukkitEntity().getVehicle().setPassenger(null);
         }
     }
 
@@ -69,21 +69,21 @@ public class SittingTrait extends Trait implements Listener  {
     }
 
     private void sitInternal() {
-        CraftFakeArrow.createArrow(npc.getEntity().getLocation()).setPassenger(npc.getEntity());
-        //PlayerAnimation.SIT.play((Player)npc.getEntity());
+        CraftFakeArrow.createArrow(npc.getBukkitEntity().getLocation()).setPassenger(npc.getBukkitEntity());
+        //PlayerAnimation.SIT.play((Player)npc.getBukkitEntity());
         //eh.getDataWatcher().watch(0, (byte) 0x04);
         sitting = true;
     }
 
     private void standInternal() {
-        Entity vehicle = npc.getEntity().getVehicle();
+        Entity vehicle = npc.getBukkitEntity().getVehicle();
         npc.despawn();
         npc.spawn(npc.getStoredLocation().clone().add(0, 0.5, 0));
         if (vehicle != null && vehicle.isValid()) {
             vehicle.setPassenger(null);
             vehicle.remove();
         }
-        //PlayerAnimation.STOP_SITTING.play((Player)npc.getEntity());
+        //PlayerAnimation.STOP_SITTING.play((Player)npc.getBukkitEntity());
         //eh.getDataWatcher().watch(0, (byte) 0x00);
         sitting = false;
     }
@@ -96,7 +96,7 @@ public class SittingTrait extends Trait implements Listener  {
     public void sit(Location location) {
         DenizenAPI.getDenizenNPC(npc).action("sit", null);
 
-        if (npc.getEntity().getType() != EntityType.PLAYER) {
+        if (npc.getBukkitEntity().getType() != EntityType.PLAYER) {
             return;
         }
 

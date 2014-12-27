@@ -44,7 +44,7 @@ public class PathBlockExaminer implements BlockExaminer {
         Material in = source.getMaterialAt(pos);
 
         // Discourage walking up a Z level
-        if (point.getVector().getBlockY() > npc.getEntity().getLocation().getBlockY())
+        if (point.getVector().getBlockY() > npc.getBukkitEntity().getLocation().getBlockY())
             return 5f;
 
         // Encourage materials that are not in the filter
