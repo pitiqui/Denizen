@@ -116,14 +116,10 @@ public class dMaterial implements dObject {
     public final static dMaterial SPRUCE_LEAVES = new dMaterial(Material.LEAVES, 1).forceIdentifyAs("SPRUCE_LEAVES");
     public final static dMaterial BIRCH_LEAVES = new dMaterial(Material.LEAVES, 2).forceIdentifyAs("BIRCH_LEAVES");
     public final static dMaterial JUNGLE_LEAVES = new dMaterial(Material.LEAVES, 3).forceIdentifyAs("JUNGLE_LEAVES");
-    public final static dMaterial ACACIA_LEAVES = new dMaterial(Material.LEAVES_2, 0).forceIdentifyAs("ACACIA_LEAVES");
-    public final static dMaterial DARKOAK_LEAVES = new dMaterial(Material.LEAVES_2, 1).forceIdentifyAs("DARKOAK_LEAVES");
     public final static dMaterial PLACED_OAK_LEAVES = new dMaterial(Material.LEAVES, 4).forceIdentifyAs("PLACED_OAK_LEAVES");
     public final static dMaterial PLACED_SPRUCE_LEAVES = new dMaterial(Material.LEAVES, 5).forceIdentifyAs("PLACED_SPRUCE_LEAVES");
     public final static dMaterial PLACED_BIRCH_LEAVES = new dMaterial(Material.LEAVES, 6).forceIdentifyAs("PLACED_BIRCH_LEAVES");
     public final static dMaterial PLACED_JUNGLE_LEAVES = new dMaterial(Material.LEAVES, 7).forceIdentifyAs("PLACED_JUNGLE_LEAVES");
-    public final static dMaterial PLACED_ACACIA_LEAVES = new dMaterial(Material.LEAVES_2, 4).forceIdentifyAs("PLACED_ACACIA_LEAVES");
-    public final static dMaterial PLACED_DARKOAK_LEAVES = new dMaterial(Material.LEAVES_2, 5).forceIdentifyAs("PLACED_DARKOAK_LEAVES");
 
     // Sandstone
     public final static dMaterial CHISELED_SANDSTONE = new dMaterial(Material.SANDSTONE, 1).forceIdentifyAs("CHISELED_SANDSTONE");
