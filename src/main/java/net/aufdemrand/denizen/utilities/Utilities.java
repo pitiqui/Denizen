@@ -115,7 +115,7 @@ public class Utilities {
         player.getPlayerEntity().sendMessage(talkFormat);
 
         // Send message to bystanders
-        for (Player target : Bukkit.getOnlinePlayers()) {
+        for (Player target : dPlayer.getOnlinePlayers()) {
             if (target != player.getPlayerEntity())
                 if (target.getWorld().equals(player.getPlayerEntity().getWorld())
                         && target.getLocation().distance(player.getPlayerEntity().getLocation()) <= range)
