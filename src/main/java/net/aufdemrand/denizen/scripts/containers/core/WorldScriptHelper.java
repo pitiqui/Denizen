@@ -1879,37 +1879,6 @@ public class WorldScriptHelper implements Listener {
 
     // <--[event]
     // @Events
-    // entity unleashed (because <reason>)
-    // <entity> unleashed (because <reason>)
-    //
-    // @Triggers when an entity is unleashed.
-    // @Context
-    // <context.entity> returns the dEntity.
-    // <context.reason> returns an Element of the reason for the unleashing.
-    // @Note
-    // Reasons include DISTANCE, HOLDER_GONE, PLAYER_UNLEASH, and UNKNOWN
-    //
-    // -->
-    @EventHandler
-    public void entityUnleash(EntityUnleashEvent event) {
-
-        Map<String, dObject> context = new HashMap<String, dObject>();
-        dEntity entity = new dEntity(event.getEntity());
-        String reason = event.getReason().name();
-
-        context.put("entity", entity.getDenizenObject());
-        context.put("reason", new Element(reason));
-
-        EventManager.doEvents(Arrays.asList
-                ("entity unleashed",
-                        "entity unleashed because " + reason,
-                        entity.identifyType() + " unleashed",
-                        entity.identifyType() + " unleashed because " + reason),
-                null, null, context, true);
-    }
-
-    // <--[event]
-    // @Events
     // entity explosion primes
     // <entity> explosion primes
     //
@@ -3624,38 +3593,6 @@ public class WorldScriptHelper implements Listener {
         if (!determination.equals("none")) {
             event.setLeaveMessage(determination);
         }
-    }
-
-    // <--[event]
-    // @Events
-    // player leashes entity
-    // player leashes <entity>
-    //
-    // @Triggers when a player leashes an entity.
-    // @Context
-    // <context.entity> returns the dEntity of the leashed entity.
-    // <context.holder> returns the dEntity that is holding the leash.
-    //
-    // @Determine
-    // "CANCELLED" to cancel the leashing.
-    //
-    // -->
-    @EventHandler
-    public void playerLeashEntity(PlayerLeashEntityEvent event) {
-
-        Map<String, dObject> context = new HashMap<String, dObject>();
-        dEntity entity = new dEntity(event.getEntity());
-
-        context.put("entity", entity);
-        context.put("holder", new dEntity(event.getLeashHolder()));
-
-        String determination = EventManager.doEvents(Arrays.asList
-                ("player leashes entity",
-                        "player leashes " + entity.identifyType()),
-                null, new dPlayer(event.getPlayer()), context, true);
-
-        if (determination.equalsIgnoreCase("CANCELLED"))
-            event.setCancelled(true);
     }
 
     // <--[event]
