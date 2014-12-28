@@ -12,7 +12,6 @@ public class EntityColor implements Property {
     public static boolean describes(dObject entity) {
         return entity instanceof dEntity &&
                 (((dEntity) entity).getEntityType() == EntityType.SHEEP
-                || ((dEntity) entity).getEntityType() == EntityType.HORSE
                 || ((dEntity) entity).getEntityType() == EntityType.WOLF
                 || ((dEntity) entity).getEntityType() == EntityType.OCELOT);
     }
@@ -35,12 +34,7 @@ public class EntityColor implements Property {
     dEntity colored;
 
     private String getColor() {
-        if (colored.getEntityType() == EntityType.HORSE)
-          return ((Horse) colored.getBukkitEntity()).getColor().name() + "|" +
-                  ((Horse) colored.getBukkitEntity()).getStyle().name() + "|" +
-                  ((Horse) colored.getBukkitEntity()).getVariant().name();
-
-        else if (colored.getEntityType() == EntityType.SHEEP)
+        if (colored.getEntityType() == EntityType.SHEEP)
           return ((Sheep) colored.getBukkitEntity()).getColor().name();
 
         else if (colored.getEntityType() == EntityType.WOLF)
@@ -130,20 +124,7 @@ public class EntityColor implements Property {
         // -->
 
         if (mechanism.matches("color")) {
-            if (colored.getEntityType() == EntityType.HORSE) {
-                    dList horse_info = mechanism.getValue().asType(dList.class);
-                if (horse_info.size() > 0 && new Element(horse_info.get(0)).matchesEnum(Horse.Color.values()))
-                    ((Horse) colored.getBukkitEntity())
-                            .setColor(Horse.Color.valueOf(horse_info.get(0).toUpperCase()));
-                if (horse_info.size() > 1 && new Element(horse_info.get(1)).matchesEnum(Horse.Style.values()))
-                    ((Horse) colored.getBukkitEntity())
-                            .setStyle(Horse.Style.valueOf(horse_info.get(1).toUpperCase()));
-                if (horse_info.size() > 2 && new Element(horse_info.get(2)).matchesEnum(Horse.Variant.values()))
-                    ((Horse) colored.getBukkitEntity())
-                            .setVariant(Horse.Variant.valueOf(horse_info.get(2).toUpperCase()));
-            }
-
-            else if (colored.getEntityType() == EntityType.SHEEP
+            if (colored.getEntityType() == EntityType.SHEEP
                     && mechanism.getValue().matchesEnum(DyeColor.values()))
                 ((Sheep) colored.getBukkitEntity())
                         .setColor(DyeColor.valueOf(mechanism.getValue().asString().toUpperCase()));

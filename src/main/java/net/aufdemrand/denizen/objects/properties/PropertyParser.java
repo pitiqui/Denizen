@@ -95,7 +95,7 @@ public class PropertyParser {
             describes.put(property, property.getMethod("describes", dObject.class));
             getFrom.put(property, property.getMethod("getFrom", dObject.class));
 
-        } catch (NoSuchMethodException e) {
+        } catch (Exception e) {
             dB.echoError("Unable to register property '" + property.getSimpleName() + "'!");
         }
 

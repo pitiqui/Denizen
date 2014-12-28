@@ -59,6 +59,10 @@ public class DamageTrigger extends AbstractTrigger implements Listener {
     @EventHandler
     public void damageTrigger(EntityDamageByEntityEvent event) {
 
+        if (true) {
+            return;
+        }
+
         if (event.getEntity() == null)
             return;
 
