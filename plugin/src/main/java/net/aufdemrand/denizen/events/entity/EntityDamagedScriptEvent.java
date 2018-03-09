@@ -12,10 +12,14 @@ import net.aufdemrand.denizencore.scripts.ScriptEntryData;
 import net.aufdemrand.denizencore.scripts.containers.ScriptContainer;
 import net.aufdemrand.denizencore.utilities.CoreUtilities;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.PotionEffectType;
 
 public class EntityDamagedScriptEvent extends BukkitScriptEvent implements Listener {
 
@@ -78,6 +82,7 @@ public class EntityDamagedScriptEvent extends BukkitScriptEvent implements Liste
     public Element cause;
     public Element damage;
     public Element final_damage;
+    public Element critical;
     public dEntity damager;
     public dEntity projectile;
     public dItem held;
@@ -173,6 +178,9 @@ public class EntityDamagedScriptEvent extends BukkitScriptEvent implements Liste
         else if (name.equals("damager") && damager != null) {
             return damager.getDenizenObject();
         }
+        else if (name.equals("critical") && damager != null) {
+            return critical;
+        }
         else if (name.equals("projectile") && projectile != null) {
             return projectile.getDenizenObject();
         }
@@ -195,6 +203,7 @@ public class EntityDamagedScriptEvent extends BukkitScriptEvent implements Liste
         damager = null;
         projectile = null;
         held = null;
+        critical = null;
         if (event instanceof EntityDamageByEntityEvent) {
             damager = new dEntity(((EntityDamageByEntityEvent) event).getDamager());
             if (damager.isProjectile()) {
@@ -205,6 +214,23 @@ public class EntityDamagedScriptEvent extends BukkitScriptEvent implements Liste
             }
             if (damager != null) {
                 held = damager.getItemInHand();
+
+                Entity eDamager = ((EntityDamageByEntityEvent) event).getDamager();
+                if(eDamager instanceof Player) {
+                    Player player = (Player) eDamager;
+                    if(player.getFallDistance() != 0.0F &&
+                            !eDamager.isOnGround() &&
+                            !player.isInsideVehicle() &&
+                            !player.hasPotionEffect(PotionEffectType.BLINDNESS) &&
+                            player.getLocation().getBlock().getType() != Material.LADDER &&
+                            player.getLocation().getBlock().getType() != Material.VINE &&
+                            !player.isSprinting()) {
+                        critical = new Element(true);
+                    } else {
+                        critical = new Element(false);
+                    }
+                }
+
                 if (held != null) {
                     held.setAmount(1);
                 }
